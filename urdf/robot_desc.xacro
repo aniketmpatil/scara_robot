@@ -1,0 +1,227 @@
+<?xml version="0.0"?>
+<robot name="scara_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Constants for robot dimensions -->
+    <xacro:property name="PI" value="3.1415926535897931"/>
+    <xacro:property name="mass" value="1" /> <!-- arbitrary value for mass -->
+    <xacro:property name="width" value="0.1" /> <!-- Square dimensions (widthxwidth) of beams -->
+    <xacro:property name="radius1" value="0.2" /> <!-- Base radius -->
+    <xacro:property name="height0" value="0.3" /> <!-- Base height -->
+    <xacro:property name="height2" value="0.5" /> <!-- Link 2 -->
+    <xacro:property name="height3" value="1" /> <!-- Link 3 -->
+    <xacro:property name="height4" value="0.2" /> <!-- Link 3 -->
+    <xacro:property name="radius2" value="0.1" /> <!-- Link 3 -->
+    <xacro:property name="camera_link" value="0.05" /> <!-- Size of square 'camera' box -->
+    <xacro:property name="axel_offset" value="0.05" /> <!-- Space btw top of beam and the each joint -->
+
+    <link name="world"/>
+
+    <joint name="fixed1" type="fixed">
+        <parent link="world"/>
+        <child link="base"/>
+        <origin xyz="0 0 ${height0/2}" rpy="0 0 0"/>
+    </joint>
+
+    <!-- Base Link -->
+    <link name="base">
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length = "${height0}" radius = "${radius1}"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length = "${height0}" radius = "${radius1}"/>
+            </geometry>
+        </visual>
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="10"/>
+            <inertia ixx="0.31" ixy="0.0" ixz="0.0" iyy="0.31" iyz="0.0" izz="0.2"/>
+        </inertial>
+    </link>
+
+    <joint name="joint1" type="continuous">
+        <parent link="base"/>
+        <child link="link1_v"/>
+        <origin xyz="0 0 ${height0/2}" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+        <!-- <dynamics damping="0.7"/> -->
+    </joint>
+
+    <link name="link1_v">
+        <collision>
+            <origin xyz="0 0 ${height2/2}" rpy="0 0 0"/>
+            <geometry>
+                <box size="${width} ${width} ${height2}"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="0 0 ${height2/2}" rpy="0 0 0"/>
+            <geometry>
+                <box size="${width} ${width} ${height2}"/>
+            </geometry>
+            <material name="orange"/>
+        </visual>
+
+        <inertial>
+            <origin xyz="0 0 ${height2/2}" rpy="0 0 0"/>
+            <mass value="${mass}"/>
+            <inertia
+                ixx="${mass / 12.0 * (width*width + height2*height2)}" ixy="0.0" ixz="0.0"
+                iyy="${mass / 12.0 * (height2*height2 + width*width)}" iyz="0.0"
+                izz="${mass / 12.0 * (width*width + width*width)}"/>
+        </inertial>
+    </link>
+    
+    <joint name="fixed2" type="fixed">
+        <parent link="link1_v"/>
+        <child link="link1_h"/>
+        <origin xyz="0 0 ${height2 + width/2}" rpy="0 0 0"/>
+        <!-- <axis xyz="0 0 1"/> -->
+        <!-- <dynamics damping="0.7"/> -->
+    </joint>
+
+    <link name="link1_h">
+        <collision>
+            <origin xyz="0 ${height3/2 - width/2} 0" rpy="1.57 0 0"/>
+            <geometry>
+                <box size="${width} ${width} ${height3}"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="0 ${height3/2 - width/2} 0" rpy="1.57 0 0"/>
+            <geometry>
+                <box size="${width} ${width} ${height3}"/>
+            </geometry>
+            <material name="orange"/>
+        </visual>
+
+        <inertial>
+            <origin xyz="0 ${height3/2 - width/2} 0" rpy="1.57 0 0"/>
+            <mass value="${mass}"/>
+            <inertia
+                ixx="${mass / 12.0 * (width*width + height3*height3)}" ixy="0.0" ixz="0.0"
+                iyy="${mass / 12.0 * (height3*height3 + width*width)}" iyz="0.0"
+                izz="${mass / 12.0 * (width*width + width*width)}"/>
+        </inertial>
+    </link>
+
+    <joint name="cyl_joint1" type="fixed">
+        <parent link="link1_h"/>
+        <child link="cyl1"/>
+        <origin xyz="0 ${height3} ${height4/4}" rpy="0 0 0"/>
+    </joint>
+
+    <!-- Base Link -->
+    <link name="cyl1">
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length = "${height4}" radius = "${radius2}"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length = "${height4}" radius = "${radius2}"/>
+            </geometry>
+        </visual>
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="2"/>
+            <inertia ixx="0.31" ixy="0.0" ixz="0.0" iyy="0.31" iyz="0.0" izz="0.2"/>
+        </inertial>
+    </link>
+
+    <joint name="joint2" type="continuous">
+        <parent link="cyl1"/>
+        <child link="link2"/>
+        <origin xyz="0 0 ${height4/4}" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+
+    <link name="link2">
+        <collision>
+            <origin xyz="0 ${height3/2 - width/2} 0" rpy="1.57 0 0"/>
+            <geometry>
+                <box size="${width} ${width} ${height3}"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="0 ${height3/2 - width/2} 0" rpy="1.57 0 0"/>
+            <geometry>
+                <box size="${width} ${width} ${height3}"/>
+            </geometry>
+            <material name="orange"/>
+        </visual>
+
+        <inertial>
+            <origin xyz="0 ${height3/2 - width/2} 0" rpy="1.57 0 0"/>
+            <mass value="${mass}"/>
+            <inertia
+                ixx="${mass / 12.0 * (width*width + height3*height3)}" ixy="0.0" ixz="0.0"
+                iyy="${mass / 12.0 * (height3*height3 + width*width)}" iyz="0.0"
+                izz="${mass / 12.0 * (width*width + width*width)}"/>
+        </inertial>
+    </link>
+
+    <joint name="cyl_joint2" type="fixed">
+        <parent link="link2"/>
+        <child link="cyl2"/>
+        <origin xyz="0 ${height3} 0" rpy="0 0 0"/>
+    </joint>
+
+    <link name="cyl2">
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length = "${height4/2}" radius = "${radius2}"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length = "${height4/2}" radius = "${radius2}"/>
+            </geometry>
+        </visual>
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="2"/>
+            <inertia ixx="0.31" ixy="0.0" ixz="0.0" iyy="0.31" iyz="0.0" izz="0.2"/>
+        </inertial>
+    </link>
+
+    <joint name="joint3" type="prismatic">
+        <parent link="cyl2"/>
+        <child link="link3"/>
+        <origin xyz="0 0 ${height0}" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+        <limit effort="1000" lower="0" upper="1" velocity="0.1"/>
+    </joint>
+
+    <link name="link3">
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length = "${height3}" radius = "${radius2/2}"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length = "${height3}" radius = "${radius2/2}"/>
+            </geometry>
+        </visual>
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="2"/>
+            <inertia ixx="0.31" ixy="0.0" ixz="0.0" iyy="0.31" iyz="0.0" izz="0.2"/>
+        </inertial>
+    </link>
+</robot>
