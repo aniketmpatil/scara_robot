@@ -1,6 +1,14 @@
 <?xml version="0.0"?>
 <robot name="scara_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+    <!-- ros_control plugin -->
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+        <robotNamespace>/scara_robot</robotNamespace>
+        <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+        </plugin>
+    </gazebo>
+
     <!-- Constants for robot dimensions -->
     <xacro:property name="PI" value="3.1415926535897931"/>
     <xacro:property name="mass" value="1" /> <!-- arbitrary value for mass -->
@@ -13,6 +21,8 @@
     <xacro:property name="radius2" value="0.1" /> <!-- Link 3 -->
     <xacro:property name="camera_link" value="0.05" /> <!-- Size of square 'camera' box -->
     <xacro:property name="axel_offset" value="0.05" /> <!-- Space btw top of beam and the each joint -->
+
+    <xacro:include filename="$(find scara_robot)/urdf/materials.xacro" />
 
     <link name="world"/>
 
@@ -48,7 +58,7 @@
         <child link="link1_v"/>
         <origin xyz="0 0 ${height0/2}" rpy="0 0 0"/>
         <axis xyz="0 0 1"/>
-        <!-- <dynamics damping="0.7"/> -->
+        <dynamics damping="0.7"/>
     </joint>
 
     <link name="link1_v">
@@ -143,6 +153,7 @@
         <child link="link2"/>
         <origin xyz="0 0 ${height4/4}" rpy="0 0 0"/>
         <axis xyz="0 0 1"/>
+        <dynamics damping="0.7"/>
     </joint>
 
     <link name="link2">
@@ -224,4 +235,37 @@
             <inertia ixx="0.31" ixy="0.0" ixz="0.0" iyy="0.31" iyz="0.0" izz="0.2"/>
         </inertial>
     </link>
+
+    <transmission name="tran1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="joint1">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor1">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="tran2">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="joint2">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor2">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="tran3">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="joint3">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor3">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
 </robot>
