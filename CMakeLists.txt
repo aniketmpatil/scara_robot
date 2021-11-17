@@ -206,3 +206,6 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+add_executable(scara_forward src/forward.cpp)
+target_link_libraries(scara_forward ${catkin_LIBRARIES})
