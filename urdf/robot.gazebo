@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<robot>
+
+  <!-- ros_control plugin -->
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/scara_robot</robotNamespace>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+    </plugin>
+  </gazebo>
+
+  <!-- Joint1_body -->
+  <gazebo reference="base">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  
+  <!-- Joint2_body -->
+  <gazebo reference="cyl1">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <!-- Joint2_body -->
+  <gazebo reference="cyl2">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <!-- Link1 -->
+  <gazebo reference="link1_v">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
+  <!-- Link1 -->
+  <gazebo reference="link1_h">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
+  <!-- Link2 -->
+  <gazebo reference="link2">
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
+  <!-- Link3 -->
+  <gazebo reference="link3">
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <material>Gazebo/Orange</material>
+  </gazebo>
+
+
+</robot>
