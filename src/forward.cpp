@@ -6,6 +6,7 @@
 #include "geometry_msgs/Vector3.h"
 #include "geometry_msgs/Pose.h"
 #include "sensor_msgs/JointState.h"
+#include "tf/tf.h"
 
 using namespace ros;
 using namespace std;
@@ -149,7 +150,7 @@ public:
         {    
             for(int j=0;j<4;j++)    
             {     
-                cout<<T3_0[i][j]<<" ";    
+                cout<<T3_0[i][j]<<" ";
             }    
             cout<<"\n\n";    
         }
@@ -158,6 +159,24 @@ public:
         pose.position.x = T3_0[0][3];
         pose.position.y = T3_0[1][3];
         pose.position.z = T3_0[2][3];
+
+        tf::Matrix3x3 mat(1,0,0,0,1,0,0,0,1);
+        double roll, pitch, yaw;
+        mat.getRPY(roll, pitch, yaw);
+
+        tf::Quaternion quat;
+        quat = tf::createQuaternionFromRPY(roll, pitch, yaw);
+
+        pose.orientation.x = quat.getX();
+        pose.orientation.y = quat.getY();
+        pose.orientation.z = quat.getZ();
+        pose.orientation.w = quat.getW();
+        cout << "Quat:" << endl;
+        cout << pose.orientation.x << endl;
+        cout << pose.orientation.y << endl;
+        cout << pose.orientation.z << endl;
+        cout << pose.orientation.w << endl;
+
         pub.publish(pose);
     }
 };
