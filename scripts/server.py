@@ -19,13 +19,14 @@ def handle_inverse_kin(req):
     y = req.pose.position.y
     z = req.pose.position.z
 
-    D = ((x**2)+(y**2)-(a1**2)+(a2**2))/(2*a1*a2)
-    q2 = np.arctan2(math.sqrt(1-D**2), D)
+    D = ((x**2)+(y**2)-(a1**2)-(a2**2))/(2*a1*a2)
+    print(D, x, y, z)
+    q2 = math.atan2(math.sqrt(1-D**2), D)
     q1 = np.arctan2(y, x) - np.arctan2(a2*math.sin(q2), (a1 + a2*math.cos(q2)))
     d3 = (h0 + a0 - z)
 
     joints = JointState()
-    joints.name["joint1", "joint2", "joint3"]
+    joints.name = ["joint1", "joint2", "joint3"]
     joints.position = [q1, q2, d3]
     return joints
 

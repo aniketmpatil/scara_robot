@@ -9,12 +9,12 @@
     </plugin>
   </gazebo>
 
-  <!-- Joint1_body -->
+  <!-- Base -->
   <gazebo reference="base">
     <material>Gazebo/Black</material>
   </gazebo>
   
-  <!-- Joint2_body -->
+  <!-- Joint1_body -->
   <gazebo reference="cyl1">
     <material>Gazebo/Black</material>
   </gazebo>
@@ -25,11 +25,11 @@
   </gazebo>
 
   <!-- Link1 -->
-  <gazebo reference="link1_v">
+  <gazebo reference="link1">
     <material>Gazebo/Blue</material>
   </gazebo>
 
-  <!-- Link1 -->
+  <!-- Link1-horizontal -->
   <gazebo reference="link1_h">
     <material>Gazebo/Blue</material>
   </gazebo>
@@ -47,6 +47,4 @@
     <mu2>0.2</mu2>
     <material>Gazebo/Orange</material>
   </gazebo>
-
-
 </robot>

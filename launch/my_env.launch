@@ -21,4 +21,6 @@
     respawn="false" output="screen">
     <remap from="/joint_states" to="/scara_robot/joint_states" />
   </node>
+
+  <!-- <node pkg="scara_robot" type="scara_forward" name="forward_node"/> -->
 </launch>
