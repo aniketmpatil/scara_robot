@@ -6,14 +6,14 @@ scara_robot:
   
   # Position Controllers ---------------------------------------
   joint1_position_controller:
-    type: velocity_controllers/JointPositionController
+    type: effort_controllers/JointPositionController
     joint: joint1
-    pid: {p: 1, i: 0.0, d: 0.1}
+    pid: {p: 200.0, i: 0.0, d: 120.0}
   joint2_position_controller:
-    type: velocity_controllers/JointPositionController
+    type: effort_controllers/JointPositionController
     joint: joint2
-    pid: {p: 1, i: 0.0, d: 0.1}
+    pid: {p: 55.0, i: 0.0, d: 30.0}
   joint3_position_controller:
-    type: velocity_controllers/JointPositionController
+    type: effort_controllers/JointPositionController
     joint: joint3
-    pid: {p: 1.0, i: 0.01, d: 0.1}
+    pid: {p: 50.0, i: 0.0, d: 10.0}
