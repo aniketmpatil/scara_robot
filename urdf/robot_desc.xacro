@@ -7,7 +7,7 @@
     <xacro:property name="width" value="0.1" /> <!-- Square dimensions (widthxwidth) of beams -->
     <xacro:property name="radius0" value="0.2" /> <!-- Base radius -->
     <xacro:property name="height0" value="0.3" /> <!-- Base height -->
-    <xacro:property name="a0" value="0.5" /> <!-- Link 1 Vertical -->
+    <xacro:property name="a0" value="1" /> <!-- Link 1 Vertical -->
     <xacro:property name="a1" value="1" /> <!-- Link 1 Horizontal -->
     <xacro:property name="height1" value="0.12" /> <!-- Cylinder Height-->
     <xacro:property name="a2" value="1" /> <!-- Link 2 -->
@@ -51,6 +51,7 @@
         <origin xyz="0 0 ${height0}" rpy="0 0 0"/>
         <axis xyz="0 0 1"/>
         <dynamics damping="0.7"/>
+        <limit effort="1000" velocity="2"/>
     </joint>
 
     <link name="link1">
@@ -73,8 +74,8 @@
             <mass value="${mass}"/>
             <inertia
                 ixx="${mass / 12.0 * (width*width + a0*a0)}" ixy="0.0" ixz="0.0"
-                iyy="${mass / 12.0 * (a0*a0 + width*width)}" iyz="0.0"
-                izz="${mass / 12.0 * (width*width + width*width)}"/>
+                iyy="${mass / 12.0 * (width*width + width*width)}" iyz="0.0"
+                izz="${mass / 12.0 * (width*width + a0*a0)}"/>
         </inertial>
     </link>
     
@@ -106,8 +107,8 @@
             <mass value="${mass}"/>
             <inertia
                 ixx="${mass / 12.0 * (width*width + a1*a1)}" ixy="0.0" ixz="0.0"
-                iyy="${mass / 12.0 * (a1*a1 + width*width)}" iyz="0.0"
-                izz="${mass / 12.0 * (width*width + width*width)}"/>
+                iyy="${mass / 12.0 * (width*width + width*width)}" iyz="0.0"
+                izz="${mass / 12.0 * (width*width + a1*a1)}"/>
         </inertial>
     </link>
 
@@ -144,6 +145,7 @@
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <axis xyz="0 0 1"/>
         <dynamics damping="0.7"/>
+        <limit effort="1000" velocity="2"/>
     </joint>
 
     <link name="link2">
@@ -166,8 +168,8 @@
             <mass value="${mass}"/>
             <inertia
                 ixx="${mass / 12.0 * (width*width + a2*a2)}" ixy="0.0" ixz="0.0"
-                iyy="${mass / 12.0 * (a2*a2 + width*width)}" iyz="0.0"
-                izz="${mass / 12.0 * (width*width + width*width)}"/>
+                iyy="${mass / 12.0 * (width*width + width*width)}" iyz="0.0"
+                izz="${mass / 12.0 * (width*width + a2*a2)}"/>
         </inertial>
     </link>
 
@@ -202,7 +204,7 @@
         <child link="link3"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <axis xyz="0 0 -1"/>
-        <limit effort="1000" lower="0" upper="1" velocity="0.1"/>
+        <limit effort="1000" lower="0" upper="1" velocity="2"/>
     </joint>
 
     <link name="link3">
@@ -220,18 +222,21 @@
         </visual>
         <inertial>
             <origin xyz="0 0 ${a3/2}" rpy="0 0 0"/>
-            <mass value="2"/>
-            <inertia ixx="0.31" ixy="0.0" ixz="0.0" iyy="0.31" iyz="0.0" izz="0.2"/>
+            <mass value="0.1"/>
+            <inertia
+			  ixx="${0.1/12*(3*radius1/2*radius1/2 + a3*a3)}" ixy="0.0" ixz="0.0"
+			  iyy="${0.1/12*(3*radius1/2*radius1/2 + a3*a3)}" iyz="0.0"
+			  izz="${0.1/2*(radius1/2*radius1/2)}"/>
         </inertial>
     </link>
 
     <transmission name="tran1">
         <type>transmission_interface/SimpleTransmission</type>
         <joint name="joint1">
-            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
         </joint>
         <actuator name="motor1">
-            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
     </transmission>
@@ -239,10 +244,10 @@
     <transmission name="tran2">
         <type>transmission_interface/SimpleTransmission</type>
         <joint name="joint2">
-            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
         </joint>
         <actuator name="motor2">
-            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
     </transmission>
@@ -250,10 +255,10 @@
     <transmission name="tran3">
         <type>transmission_interface/SimpleTransmission</type>
         <joint name="joint3">
-            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
         </joint>
         <actuator name="motor3">
-            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
     </transmission>

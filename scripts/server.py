@@ -11,7 +11,7 @@ from sensor_msgs.msg import JointState
 # h0 is the base cylinder offset
 a1 = 1
 a2 = 1
-a0 = 0.5
+a0 = 1
 h0 = 0.3
 
 def handle_inverse_kin(req):

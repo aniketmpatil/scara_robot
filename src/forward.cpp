@@ -13,7 +13,7 @@ using namespace Eigen;
 
 // Link lengths assumed as 1, except link 0 which is 0.5
 // Height of base is 0.3
-static const double a0 = 0.5;
+static const double a0 = 1;
 static const int a1 = 1;
 static const int a2 = 1;
 static const int a3 = 1;
@@ -66,6 +66,13 @@ public:
         s_theta = sin(theta[0]);
         c_alpha = cos(alpha[0]);
         s_alpha = sin(alpha[0]);
+
+        Eigen::Matrix4d A_i;
+        A_i << c_theta, -1*s_theta*c_alpha, s_theta*s_alpha, a[0]*c_theta,
+                s_theta, c_theta*c_alpha, -1*c_theta*s_alpha, a[0]*s_theta,
+                0, s_alpha, c_alpha, d[0],
+                0, 0, 0, 1;
+        cout << "Eigen matrix: " << A_i << endl;
 
         // cout << c_theta << ", " << s_theta << ", " << c_alpha << ", " << s_alpha << endl;
         double A1[4][4] = {{c_theta, -1*s_theta*c_alpha, s_theta*s_alpha, a[0]*c_theta},
