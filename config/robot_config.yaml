@@ -17,3 +17,17 @@ scara_robot:
     type: effort_controllers/JointPositionController
     joint: joint3
     pid: {p: 50.0, i: 0.0, d: 10.0}
+
+  # Velocity Controllers ---------------------------------------
+  joint1_velocity_controller:
+    type: effort_controllers/JointVelocityController
+    joint: joint1
+    pid: {p: 50.0, i: 0.0, d: 30.0}
+  joint2_velocity_controller:
+    type: effort_controllers/JointVelocityController
+    joint: joint2
+    pid: {p: 50.0, i: 0.0, d: 30.0}
+  joint3_velocity_controller:
+    type: effort_controllers/JointVelocityController
+    joint: joint3
+    pid: {p: 50.0, i: 0.0, d: 30.0}

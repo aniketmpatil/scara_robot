@@ -66,6 +66,8 @@ find_package(catkin REQUIRED COMPONENTS
 add_service_files(
    FILES
    inv.srv
+   jacob.srv
+   inv_jacob.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -223,6 +225,7 @@ include_directories(
 catkin_install_python(PROGRAMS
    scripts/server.py
    scripts/tuner.py
+   scripts/vel_servers.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
