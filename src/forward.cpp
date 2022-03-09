@@ -72,7 +72,7 @@ public:
                 s_theta, c_theta*c_alpha, -1*c_theta*s_alpha, a[0]*s_theta,
                 0, s_alpha, c_alpha, d[0],
                 0, 0, 0, 1;
-        cout << "Eigen matrix: " << A_i << endl;
+        // cout << "Eigen matrix: " << A_i << endl;
 
         // cout << c_theta << ", " << s_theta << ", " << c_alpha << ", " << s_alpha << endl;
         double A1[4][4] = {{c_theta, -1*s_theta*c_alpha, s_theta*s_alpha, a[0]*c_theta},
