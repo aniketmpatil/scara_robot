@@ -1,7 +1,7 @@
 #!/usr/bin/env python3 	
 
-from scara_robot.srv import jacob, jacobResponse
-from scara_robot.srv import inv_jacob, inv_jacobResponse
+from scara_robot.srv import jacob
+from scara_robot.srv import inv_jacob
 from sensor_msgs.msg import JointState
 from geometry_msgs.msg import Twist
 import rospy

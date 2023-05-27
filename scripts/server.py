@@ -1,6 +1,6 @@
 #!/usr/bin/env python3 	
 
-from scara_robot.srv import inv, invResponse
+from scara_robot.srv import inv
 import rospy
 import numpy as np
 import math
