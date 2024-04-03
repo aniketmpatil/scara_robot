@@ -1,5 +1,5 @@
 name: Noetic Test
-run-name: ${{ github.actor }} is testing out the build
+run-name: Build and Test
 on:
   push:
     branches:
@@ -12,10 +12,8 @@ on:
 
 jobs:
   build_and_test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
-      - run: echo "This job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "Job Details - ${{ runner.os }} server on ${{ github.ref }} branch of ${{ github.repository }} repository."
       - name: Check out repository code
         uses: actions/checkout@v4
       - uses: ros-tooling/setup-ros@v0.7
