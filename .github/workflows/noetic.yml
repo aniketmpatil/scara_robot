@@ -1,0 +1,27 @@
+name: Noetic Test
+run-name: ${{ github.actor }} is testing out the build
+on:
+  push:
+    branches:
+      - main
+      - add_ci
+    pull_request:
+      branches:
+        - main
+    workflow_dispatch:
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "This job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "Job Details - ${{ runner.os }} server on ${{ github.ref }} branch of ${{ github.repository }} repository."
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - uses: ros-tooling/setup-ros@v0.7
+        with:
+          required-ros-distributions: noetic
+      - uses: ros-tooling/action-ros-ci@v0.3
+        with:
+          package-name: scara_robot
+          target-ros1-distro: noetic
