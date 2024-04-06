@@ -1,5 +1,6 @@
 # Kinematics of Scara Robot
-## *RBE 500: Foundations of Robotics - Worcester Polytechnic Institute, Fall 2021*
+
+[![Noetic Build](https://github.com/aniketmpatil/scara_robot/actions/workflows/noetic.yml/badge.svg)](https://github.com/aniketmpatil/scara_robot/actions/workflows/noetic.yml)
 
 <img src="docs/robot_vis.png" width=700/> 
 
